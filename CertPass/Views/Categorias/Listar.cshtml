@@ -1,0 +1,10 @@
+﻿@{ 
+    Servico.CategoriasServico teste = new Servico.CategoriasServico();
+    IEnumerable < Modelo.Categorias >  categorias = teste.List();
+}
+
+@foreach (var item in categorias)
+{
+    <li>@Html.ActionLink(item.NomeCateg, "Index","Home")</li>
+}
+
