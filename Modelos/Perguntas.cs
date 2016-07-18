@@ -15,15 +15,19 @@ namespace Modelo
         [Required(ErrorMessage = "Nome Obrigatório")]
         public string DescPergunta { get; set; }
 
+        [DisplayName("Alternativa 1")]
         [Required(ErrorMessage = "Alternativa Obrigatória")]
         public string Alt1 { get; set; }
 
+        [DisplayName("Alternativa 2")]
         [Required(ErrorMessage = "Alternativa Obrigatória")]
         public string Alt2 { get; set; }
 
+        [DisplayName("Alternativa 3")]
         [Required(ErrorMessage = "Alternativa Obrigatória")]
         public string Alt3 { get; set; }
 
+        [DisplayName("Alternativa 4")]
         [Required(ErrorMessage = "Alternativa Obrigatória")]
         public string Alt4 { get; set; }
 

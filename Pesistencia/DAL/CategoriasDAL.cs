@@ -14,7 +14,7 @@ namespace Pesistencia.DAL
 
         public IEnumerable<Categorias> List()
         {
-            return db.Categorias.OrderBy(x => x.NomeCateg);
+                return db.Categorias.OrderBy(x => x.NomeCateg);
         }
 
         public void Save(Categorias cate)
