@@ -12,7 +12,7 @@ namespace Servico
     {
         private CategoriasDAL _categoriaDAL = new CategoriasDAL();
 
-        public IEnumerable<Categorias> List()
+        public IQueryable<Categorias> List()
         {
             return _categoriaDAL.List();
         }

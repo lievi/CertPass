@@ -32,16 +32,16 @@ namespace Persistencia.DAL
         }
 
         //List
-        public IEnumerable<Perguntas> List()
+        public IQueryable<Perguntas> List()
         {
-            return db.Perguntas.OrderBy(x => x.PerguntaId);
+            return db.Perguntas.OrderBy(x => x.PerguntaId).Include(c=>c.Categorias).OrderBy(x=>x.DescPergunta);
         }
 
 
         //GetByID
         public Registro GetById(long i)
         {
-            Perguntas p = db.Perguntas.Where(x => x.PerguntaId == i).First();
+            Perguntas p = db.Perguntas.Where(x => x.PerguntaId == i).Include(c =>c.Categorias).First();
             Registro r = new Registro();
             r.Perguntas = p;
             r.Respostas = db.Respostas.Where(x => x.RespostaId == p.RespostaId).First();

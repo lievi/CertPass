@@ -11,6 +11,7 @@ namespace CertPass.Controllers
     public class RegistrosController : Controller
     {
         private PerguntasServico perguntasServico = new PerguntasServico();
+        private CategoriasServico categoriasServico = new CategoriasServico();
         // GET: Perguntas
         public ActionResult Index()
         {
@@ -26,20 +27,18 @@ namespace CertPass.Controllers
         // GET: Perguntas/Create
         public ActionResult Create()
         {
+            PopularViewBag();
             return View();
         }
 
         // POST: Perguntas/Create
         [HttpPost]
-        public ActionResult Create(Registro novoRegistro)
+        public ActionResult Create(Registro novoRegistro, Perguntas pergunta)
         {
+            novoRegistro.Perguntas.CategoriaId = pergunta.CategoriaId;
             try
             {
-                if (ModelState.IsValid)
-                {
-                    perguntasServico.Save(novoRegistro);
-                }
-
+                perguntasServico.Save(novoRegistro);
                 return RedirectToAction("Index");
             }
             catch
@@ -75,6 +74,19 @@ namespace CertPass.Controllers
         {
             perguntasServico.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        private void PopularViewBag(Registro registro = null)
+        {
+            if (registro == null)
+            {
+                ViewBag.CategoriaId = new SelectList(categoriasServico.List(),"CategoriaId","NomeCateg");
+            }
+            else
+            {
+                //No Edit, ele ja mostra a categoria salva, (selected item)
+                ViewBag.CategoriaId = new SelectList(categoriasServico.List(),"CategoriaId", "NomeCateg",registro.Perguntas.CategoriaId);
+            }
         }
     }
 }

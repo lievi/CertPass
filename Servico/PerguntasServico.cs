@@ -20,7 +20,7 @@ namespace Servico
         }
 
         //List
-        public IEnumerable<Perguntas> List()
+        public IQueryable<Perguntas> List()
         {
             return perguntasDAL.List();
         }

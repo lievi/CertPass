@@ -32,8 +32,13 @@ namespace Modelo
         public string Alt4 { get; set; }
 
         //ForengKey
+        [DisplayName("Resposta")]
         public long? RespostaId { get; set; }
         public Respostas Resposta { get; set; }
+
+        [DisplayName("Categoria")]
+        public long? CategoriaId { get; set; }
+        public Categorias Categorias { get; set; }
 
     }
 }

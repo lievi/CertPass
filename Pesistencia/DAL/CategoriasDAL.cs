@@ -2,6 +2,7 @@
 using Persistencia.Context;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace Pesistencia.DAL
     {
         private CertPassContext db = new CertPassContext();
 
-        public IEnumerable<Categorias> List()
+        public IQueryable<Categorias> List()
         {
                 return db.Categorias.OrderBy(x => x.NomeCateg);
         }
@@ -32,7 +33,7 @@ namespace Pesistencia.DAL
 
         public Categorias GetById(long id)
         {
-            return db.Categorias.Where(x => x.CategoriaId == id).First();
+            return db.Categorias.Where(x => x.CategoriaId == id).Include("Registros.Perguntas.Categorias").First();
         }
 
         public void Delete(long id)
