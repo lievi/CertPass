@@ -34,14 +34,14 @@ namespace Persistencia.DAL
         //List
         public IQueryable<Perguntas> List()
         {
-            return db.Perguntas.OrderBy(x => x.PerguntaId).Include(c=>c.Categorias).OrderBy(x=>x.DescPergunta);
+            return db.Perguntas.OrderBy(x => x.PerguntaId).Include(c => c.Categorias).OrderBy(x => x.DescPergunta);
         }
 
 
         //GetByID
         public Registro GetById(long i)
         {
-            Perguntas p = db.Perguntas.Where(x => x.PerguntaId == i).Include(c =>c.Categorias).First();
+            Perguntas p = db.Perguntas.Where(x => x.PerguntaId == i).Include(c => c.Categorias).First();
             Registro r = new Registro();
             r.Perguntas = p;
             r.Respostas = db.Respostas.Where(x => x.RespostaId == p.RespostaId).First();
@@ -59,37 +59,44 @@ namespace Persistencia.DAL
             db.SaveChanges();
         }
 
-        public List<Registro> GetRandom()
+        public Registro GetRandom(string ant)
         {
-            //Pegando o ID das perguntas
-            int[] nId = new int[5];
-            List<Registro> perguntasRandom = new List<Registro>();
-            IQueryable<Perguntas> perguntas = db.Perguntas.OrderBy(x => x.PerguntaId);
             Random r = new Random();
-            
-            for (int i = 0; i < 5; i++)
+            int atual = r.Next(30, 40);
+            bool batata;
+            string[] antes = ant.Split('/');
+            int[] anteriores = new int[antes.Length];
+            for (int i = 0; i < antes.Length; i++)
             {
-                int atual = r.Next(30,40);
-                if (perguntas.Any(x=>x.PerguntaId == atual))
+                anteriores[i] = Convert.ToInt32(antes[i]);
+            }
+            do            
+            {
+                batata = true;
+                Perguntas p = db.Perguntas.FirstOrDefault(x => x.PerguntaId == atual);
+                if (p != null)
                 {
-                    if (perguntasRandom.Any(x =>x.Perguntas.PerguntaId == atual))
+                    foreach (var item in anteriores)
                     {
-                        atual = r.Next(30,40);
-                        i--;
+                        if (p.PerguntaId == item)
+                        {
+                            atual = r.Next(30, 40);
+                            batata = false;
+                            break;                            
+                        }
                     }
-                    else
-                    {
-                        perguntasRandom.Add(GetById(atual));
-                    }
+                    
                 }
                 else
                 {
-                    atual = r.Next(30,40);
-                    i--;
+                    atual = r.Next(30, 40);
+                    batata = false;
                 }
-                
             }
-            return perguntasRandom;
+            while (batata == false);
+            return GetById(atual);
         }
+
     }
 }
+

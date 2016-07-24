@@ -15,18 +15,26 @@ namespace CertPass.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            
+            this.ControllerContext.HttpContext.Response.Cookies.Clear();
             HttpCookie cookie =  _cookieServico.CreateCookie();
-            if (this.ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("Cookie"))
-            {
-                //cookie = "Oh yeah baby" + this.ControllerContext.HttpContext.Request.Cookies["Cookie"].Value;
-            }
+            //if (this.ControllerContext.HttpContext.Request.Cookies.AllKeys.Contains("Cookie"))
+            //{
+            //    cookie = "Oh yeah baby" + this.ControllerContext.HttpContext.Request.Cookies["Cookie"].Value;
+            //}
 
             
-            List<Registro> perguntas = _perguntaServico.GetRandom();
-            cookie.
-            ViewData["Perguntas"] = perguntas;
-            return View();
+            Registro pergunta = _perguntaServico.GetRandom(ControllerContext.HttpContext.Request.Cookies["Cookie"].Value);
+            string batata = ControllerContext.HttpContext.Request.Cookies["Cookie"].Value;
+            batata = batata +"/"+ pergunta.Perguntas.PerguntaId.ToString();
+            cookie.Value = batata;
+            return View(pergunta);
+        }
+
+        [HttpPost]
+        public ActionResult Index(Registro registro)
+        {
+            _cookieServico.RemoveCookie();
+            return RedirectToAction("Index");
         }
 
     }

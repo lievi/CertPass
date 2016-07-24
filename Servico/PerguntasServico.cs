@@ -36,9 +36,9 @@ namespace Servico
             perguntasDAL.Delete(id);
         }
 
-        public List<Registro> GetRandom()
+        public Registro GetRandom(string anterior)
         {
-            return perguntasDAL.GetRandom();
+            return perguntasDAL.GetRandom(anterior);
         }
 
     }

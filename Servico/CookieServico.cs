@@ -11,12 +11,22 @@ namespace Servico
     {
         public HttpCookie CreateCookie()
         {
-            HttpCookie cookie = new HttpCookie("Cookie");
-            cookie.Value = "Olá Mundo, eu fui criado ás: " + DateTime.Now.ToShortTimeString();
 
+            HttpCookie cookie = new HttpCookie("Cookie");
+            cookie.Value = "1";
             HttpContext.Current.Response.Cookies.Add(cookie);
 
             return cookie;
+        }
+
+        public void RemoveCookie()
+        {
+            if (HttpContext.Current.Request.Cookies.AllKeys.Contains("Cookie"))
+            {
+                HttpCookie cookie = HttpContext.Current.Request.Cookies["Cookie"];
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                HttpContext.Current.Response.Cookies.Add(cookie);
+            }
         }
     }
 }
