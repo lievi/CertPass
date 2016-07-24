@@ -1,9 +1,17 @@
-﻿
+﻿@using Modelo;
 @{
+    
+    List<Registro> perguntas = (List<Registro>)ViewData["Perguntas"];
     ViewBag.Title = "Index";
 }
 
 <div class="jumbotron">
     <h2>Bem-vindo</h2>
+    <h3>Cookie?</h3>
+    @foreach (var item in perguntas)
+    {
+        @Html.DisplayFor(modelItem => item.Perguntas.DescPergunta);
+        <br />
+    }
 </div>
 

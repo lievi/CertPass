@@ -33,7 +33,7 @@ namespace Pesistencia.DAL
 
         public Categorias GetById(long id)
         {
-            return db.Categorias.Where(x => x.CategoriaId == id).Include("Registros.Perguntas.Categorias").First();
+            return db.Categorias.Where(x => x.CategoriaId == id).First();
         }
 
         public void Delete(long id)

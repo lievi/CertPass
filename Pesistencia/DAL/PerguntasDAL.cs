@@ -58,5 +58,38 @@ namespace Persistencia.DAL
 
             db.SaveChanges();
         }
+
+        public List<Registro> GetRandom()
+        {
+            //Pegando o ID das perguntas
+            int[] nId = new int[5];
+            List<Registro> perguntasRandom = new List<Registro>();
+            IQueryable<Perguntas> perguntas = db.Perguntas.OrderBy(x => x.PerguntaId);
+            Random r = new Random();
+            
+            for (int i = 0; i < 5; i++)
+            {
+                int atual = r.Next(30,40);
+                if (perguntas.Any(x=>x.PerguntaId == atual))
+                {
+                    if (perguntasRandom.Any(x =>x.Perguntas.PerguntaId == atual))
+                    {
+                        atual = r.Next(30,40);
+                        i--;
+                    }
+                    else
+                    {
+                        perguntasRandom.Add(GetById(atual));
+                    }
+                }
+                else
+                {
+                    atual = r.Next(30,40);
+                    i--;
+                }
+                
+            }
+            return perguntasRandom;
+        }
     }
 }
