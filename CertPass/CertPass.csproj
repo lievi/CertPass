@@ -175,6 +175,7 @@
     <Content Include="Web.config" />
     <Content Include="Views\Home\Certo.cshtml" />
     <Content Include="Views\Home\Errado.cshtml" />
+    <Content Include="Views\Home\ProximaPergunta.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

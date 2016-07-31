@@ -12,32 +12,37 @@ namespace CertPass.Controllers
     {
         CookieServico _cookieServico = new CookieServico();
         PerguntasServico _perguntaServico = new PerguntasServico();
-        private Perguntas pergunta;
+        
         // GET: Home
         public ActionResult Index()
         {
             this.ControllerContext.HttpContext.Response.Cookies.Clear();
-            HttpCookie cookie =  _cookieServico.CreateCookie();
-            
+            HttpCookie cookie = _cookieServico.CreateCookie(_perguntaServico.GetRandom());
+
             //Somente teste, necessário colocar cada elemento aqui em sua View correspondente
-            cookie.Value = _perguntaServico.GetRandom();
-            pergunta = _perguntaServico.ProximaPerg(cookie.Value);
-            cookie.Value = _cookieServico.DeletarAnterior(pergunta.PerguntaId, cookie.Value);
+            Perguntas pergunta = _perguntaServico.ProximaPerg(cookie.Value);
+            _cookieServico.DeletarAnterior(pergunta.PerguntaId, cookie.Value);
             return View(pergunta);
         }
 
-        //[HttpPost]
-        //public ActionResult Index(Perguntas r)
-        //{
-        //    if (r.Perguntas.Alt1 == pergunta.Respostas.AltCorreta)
-        //    {
-        //        return View("~/Views/Home/Certo.cshtml");
-        //    }
-        //    return View("~/Views/Home/Errado.cshtml");
+        [HttpPost]
+        public ActionResult ProximaPergunta(Perguntas p)
+        {
+            Perguntas pAtual = _perguntaServico.GetById((long)p.PerguntaId);
 
-        //    _cookieServico.RemoveCookie();
-        //    return RedirectToAction("Index");
-        //}
+            if (p.Alt1 == pAtual.AltCorreta)
+            {
+                return View("~/Views/Home/Certo.cshtml",pAtual);
+            }
+            return View("~/Views/Home/Errado.cshtml",pAtual);
+        }
 
+        public ActionResult ProximaPergunta()
+        {
+            HttpCookie cookie = HttpContext.Request.Cookies["Cookie"];
+            Perguntas pergunta = _perguntaServico.ProximaPerg(cookie.Value);
+            _cookieServico.DeletarAnterior(pergunta.PerguntaId, cookie.Value);
+            return View(pergunta);
+        }
     }
 }

@@ -9,11 +9,11 @@ namespace Servico
 {
     public class CookieServico
     {
-        public HttpCookie CreateCookie()
+        public HttpCookie CreateCookie(string value)
         {
 
             HttpCookie cookie = new HttpCookie("Cookie");
-            cookie.Value = "1";
+            cookie.Value = value;
             HttpContext.Current.Response.Cookies.Add(cookie);
 
             return cookie;
@@ -42,7 +42,7 @@ namespace Servico
             return anteriores;
         }
 
-        public string DeletarAnterior(long? idPergunta, string ant)
+        public void DeletarAnterior(long? idPergunta, string ant)
         {
             //Transformando o cookie em array
             int[] anteriores = ToArray(ant);
@@ -64,7 +64,8 @@ namespace Servico
             {
                 novoCookie += "/" + anteriores[i];
             }
-            return novoCookie;
+            RemoveCookie();
+            CreateCookie(novoCookie);
         }
     }
 }

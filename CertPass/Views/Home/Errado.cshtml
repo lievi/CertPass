@@ -1,7 +1,10 @@
-﻿
+﻿@model Modelo.Perguntas
 @{
     ViewBag.Title = "Errado";
 }
 
 <h2>Errado</h2>
 
+<h3>@Html.DisplayFor(x => x.DescResposta)</h3>
+
+<button class="btn btn-default">@Html.ActionLink("Proxima Pergunta", "ProximaPergunta")</button>
