@@ -87,19 +87,6 @@ namespace Persistencia.DAL
             //} while (haRepetido == true || perguntas.Count != anteriores.Length);
             return teste;
         }
-
-        public Perguntas ProximaPerg(string ant)
-        {
-            //Pegando os anteriores do cache e transformando em int
-            string[] antes = ant.Split('/');
-            int[] anteriores = new int[antes.Length];
-            for (int i = 0; i < antes.Length; i++)
-            {
-                anteriores[i] = Convert.ToInt32(antes[i]);
-            }
-
-            return GetById(anteriores[0]);
-        }
     }
 }
 

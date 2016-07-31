@@ -11,7 +11,7 @@ namespace Servico
     public class PerguntasServico
     {
         private PerguntasDAL perguntasDAL = new PerguntasDAL();
-
+        private CookieServico _cookieServico = new CookieServico();
         //Create/Edit
 
         public void Save(Perguntas pergunta)
@@ -43,8 +43,7 @@ namespace Servico
 
         public Perguntas ProximaPerg(string ant)
         {
-            return perguntasDAL.ProximaPerg(ant);
+            return GetById(_cookieServico.ToArray(ant)[0]);
         }
-
     }
 }

@@ -19,8 +19,10 @@ namespace CertPass.Controllers
             this.ControllerContext.HttpContext.Response.Cookies.Clear();
             HttpCookie cookie =  _cookieServico.CreateCookie();
             
+            //Somente teste, necessário colocar cada elemento aqui em sua View correspondente
             cookie.Value = _perguntaServico.GetRandom();
             pergunta = _perguntaServico.ProximaPerg(cookie.Value);
+            cookie.Value = _cookieServico.DeletarAnterior(pergunta.PerguntaId, cookie.Value);
             return View(pergunta);
         }
 
