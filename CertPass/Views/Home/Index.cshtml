@@ -1,4 +1,4 @@
-﻿@model Modelo.Registro
+﻿@model Modelo.Perguntas
 @{
     ViewBag.Title = "Index";
 }
@@ -8,7 +8,22 @@
     <div class="jumbotron">
         <h2>Bem-vindo</h2>
         <h3>Cookie?</h3>
-        @Html.DisplayFor(model => model.Perguntas.DescPergunta);
+        @Html.DisplayFor(model => model.DescPergunta);
+        @Html.HiddenFor(model => model.PerguntaId);
+        <br />
+        <fieldset>
+            @Html.RadioButtonFor(model => model.Alt1, Model.Alt1)
+            @Html.Label(Model.Alt1, Model.Alt1.ToString())
+            <br />
+            @Html.RadioButtonFor(model => model.Alt2, Model.Alt2.ToString())
+            @Html.Label("Pergunta", Model.Alt2.ToString())
+            <br />
+            @Html.RadioButtonFor(model => model.Alt3, Model.Alt3.ToString())
+            @Html.Label("Pergunta", Model.Alt3.ToString())
+            <br />
+            @Html.RadioButtonFor(model => model.Alt4, Model.Alt4.ToString())
+            @Html.Label("Pergunta", Model.Alt4.ToString())
+        </fieldset>
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

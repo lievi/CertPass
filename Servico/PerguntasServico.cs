@@ -14,9 +14,9 @@ namespace Servico
 
         //Create/Edit
 
-        public void Save(Registro regitro)
+        public void Save(Perguntas pergunta)
         {
-            perguntasDAL.Save(regitro);
+            perguntasDAL.Save(pergunta);
         }
 
         //List
@@ -26,7 +26,7 @@ namespace Servico
         }
 
         //GetBy Id
-        public Registro GetById(long id)
+        public Perguntas GetById(long id)
         {
             return perguntasDAL.GetById(id);
         }
@@ -36,9 +36,14 @@ namespace Servico
             perguntasDAL.Delete(id);
         }
 
-        public Registro GetRandom(string anterior)
+        public string GetRandom()
         {
-            return perguntasDAL.GetRandom(anterior);
+            return perguntasDAL.GetRandom();
+        }
+
+        public Perguntas ProximaPerg(string ant)
+        {
+            return perguntasDAL.ProximaPerg(ant);
         }
 
     }

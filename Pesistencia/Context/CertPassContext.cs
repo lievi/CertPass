@@ -15,7 +15,6 @@ namespace Persistencia.Context
         }
 
         public DbSet<Perguntas> Perguntas { get; set; }
-        public DbSet<Respostas> Respostas { get; set; }
         public DbSet<Categorias> Categorias { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

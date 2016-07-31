@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace CertPass.Controllers
 {
-    public class RegistrosController : Controller
+    public class PerguntasController : Controller
     {
         private PerguntasServico perguntasServico = new PerguntasServico();
         private CategoriasServico categoriasServico = new CategoriasServico();
@@ -33,17 +33,16 @@ namespace CertPass.Controllers
 
         // POST: Perguntas/Create
         [HttpPost]
-        public ActionResult Create(Registro novoRegistro, Perguntas pergunta)
+        public ActionResult Create(Perguntas pergunta)
         {
-            novoRegistro.Perguntas.CategoriaId = pergunta.CategoriaId;
             try
             {
-                perguntasServico.Save(novoRegistro);
+                perguntasServico.Save(pergunta);
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View(novoRegistro);
+                return View(pergunta);
             }
         }
 
@@ -55,9 +54,9 @@ namespace CertPass.Controllers
 
         // POST: Perguntas/Edit/5
         [HttpPost]
-        public ActionResult Edit(Registro registro)
+        public ActionResult Edit(Perguntas pergunta)
         {
-                perguntasServico.Save(registro);
+                perguntasServico.Save(pergunta);
                 return RedirectToAction("Index");
 
         }
@@ -76,16 +75,16 @@ namespace CertPass.Controllers
             return RedirectToAction("Index");
         }
 
-        private void PopularViewBag(Registro registro = null)
+        private void PopularViewBag(Perguntas pergunta = null)
         {
-            if (registro == null)
+            if (pergunta == null)
             {
                 ViewBag.CategoriaId = new SelectList(categoriasServico.List(),"CategoriaId","NomeCateg");
             }
             else
             {
                 //No Edit, ele ja mostra a categoria salva, (selected item)
-                ViewBag.CategoriaId = new SelectList(categoriasServico.List(),"CategoriaId", "NomeCateg",registro.Perguntas.CategoriaId);
+                ViewBag.CategoriaId = new SelectList(categoriasServico.List(),"CategoriaId", "NomeCateg",pergunta.CategoriaId);
             }
         }
     }

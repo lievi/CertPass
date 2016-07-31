@@ -15,18 +15,15 @@ namespace Persistencia.DAL
         private CertPassContext db = new CertPassContext();
 
         //Create/Edit
-        public void Save(Registro registro)
+        public void Save(Perguntas pergunta)
         {
-            if (registro.Perguntas.PerguntaId == null)
+            if (pergunta.PerguntaId == null)
             {
-                registro.Perguntas.Resposta = registro.Respostas;
-                db.Perguntas.Add(registro.Perguntas);
+                db.Perguntas.Add(pergunta);
             }
             else
             {
-                db.Entry(registro.Respostas).State = EntityState.Modified;
-                registro.Perguntas.RespostaId = registro.Respostas.RespostaId;
-                db.Entry(registro.Perguntas).State = EntityState.Modified;
+                db.Entry(pergunta).State = EntityState.Modified;
             }
             db.SaveChanges();
         }
@@ -39,64 +36,70 @@ namespace Persistencia.DAL
 
 
         //GetByID
-        public Registro GetById(long i)
+        public Perguntas GetById(long i)
         {
-            Perguntas p = db.Perguntas.Where(x => x.PerguntaId == i).Include(c => c.Categorias).First();
-            Registro r = new Registro();
-            r.Perguntas = p;
-            r.Respostas = db.Respostas.Where(x => x.RespostaId == p.RespostaId).First();
-            return r;
+            return db.Perguntas.Where(x => x.PerguntaId == i).Include(c => c.Categorias).First();
+
         }
 
         public void Delete(long id)
         {
             Perguntas p = db.Perguntas.Where(x => x.PerguntaId == id).First();
-            Respostas r = db.Respostas.Where(x => x.RespostaId == p.RespostaId).First();
 
             db.Perguntas.Remove(p);
-            db.Respostas.Remove(r);
-
             db.SaveChanges();
         }
 
-        public Registro GetRandom(string ant)
+        public string GetRandom()
         {
+
+            //Criando um array de numeros randomicos
             Random r = new Random();
-            int atual = r.Next(30, 40);
-            bool batata;
+            List<Perguntas> perguntas = List().ToList();
+            string teste = "";
+            
+            HashSet<int> numbers = new HashSet<int>();
+            while (numbers.Count < 3)
+            {
+                numbers.Add(r.Next(1, perguntas.Count));
+            }
+
+            int[] rnum =  numbers.ToArray();
+            teste += numbers.First();
+            for (int i = 1; i < numbers.Count; i++)
+            {
+                teste += "/" + rnum[i];
+            }
+
+
+            //bool haRepetido = true;
+            //do
+            //{
+            //    foreach (var item in anteriores)
+            //    {
+            //        if (atual == item)
+            //        {
+            //            atual = r.Next(0, perguntas.Count);
+            //            break;
+            //        }
+            //    }
+            //    haRepetido = false;
+            //} while (haRepetido == true || perguntas.Count != anteriores.Length);
+            return teste;
+        }
+
+        public Perguntas ProximaPerg(string ant)
+        {
+            //Pegando os anteriores do cache e transformando em int
             string[] antes = ant.Split('/');
             int[] anteriores = new int[antes.Length];
             for (int i = 0; i < antes.Length; i++)
             {
                 anteriores[i] = Convert.ToInt32(antes[i]);
             }
-            do            
-            {
-                batata = true;
-                Perguntas p = db.Perguntas.FirstOrDefault(x => x.PerguntaId == atual);
-                if (p != null)
-                {
-                    foreach (var item in anteriores)
-                    {
-                        if (p.PerguntaId == item)
-                        {
-                            atual = r.Next(30, 40);
-                            batata = false;
-                            break;                            
-                        }
-                    }
-                    
-                }
-                else
-                {
-                    atual = r.Next(30, 40);
-                    batata = false;
-                }
-            }
-            while (batata == false);
-            return GetById(atual);
-        }
 
+            return GetById(anteriores[0]);
+        }
     }
 }
 

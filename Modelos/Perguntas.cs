@@ -31,11 +31,15 @@ namespace Modelo
         [Required(ErrorMessage = "Alternativa Obrigatória")]
         public string Alt4 { get; set; }
 
-        //ForengKey
-        [DisplayName("Resposta")]
-        public long? RespostaId { get; set; }
-        public Respostas Resposta { get; set; }
+        [DisplayName("Alternativa Correta")]
+        [Required(ErrorMessage = "Alternativa Obrigatória")]
+        public string AltCorreta { get; set; }
 
+        [DisplayName("Descrição da Resposta")]
+        [Required(ErrorMessage = "Resposta Obrigatória")]
+        public string DescResposta { get; set; }
+
+        //Foren Key
         [DisplayName("Categoria")]
         public long? CategoriaId { get; set; }
         public Categorias Categorias { get; set; }
