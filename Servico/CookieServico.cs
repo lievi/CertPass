@@ -46,23 +46,34 @@ namespace Servico
         {
             //Transformando o cookie em array
             int[] anteriores = ToArray(ant);
+            string novoCookie = "";
 
-            //Encontrando o ID da pergunta no array e pegando seu  index
-            int indexAnterior;
-            if (idPergunta == null)
+            //Vendo se só tem um número
+            if (anteriores.Length == 1)
             {
-                indexAnterior = 0;
+                novoCookie = anteriores[0].ToString();
             }
             else
             {
-                indexAnterior = Array.FindIndex(anteriores, x => x == idPergunta);
-            }
 
-            //Criando um novo cookie a partir do proximo valor do index encontrado
-            string novoCookie = anteriores[indexAnterior + 1].ToString();
-            for (int i = indexAnterior + 2; i < anteriores.Length; i++)
-            {
-                novoCookie += "/" + anteriores[i];
+
+                //Encontrando o ID da pergunta no array e pegando seu  index
+                int indexAnterior;
+                if (idPergunta == null)
+                {
+                    indexAnterior = 0;
+                }
+                else
+                {
+                    indexAnterior = Array.FindIndex(anteriores, x => x == idPergunta);
+                }
+
+                //Criando um novo cookie a partir do proximo valor do index encontrado
+                novoCookie = anteriores[indexAnterior + 1].ToString();
+                for (int i = indexAnterior + 2; i < anteriores.Length; i++)
+                {
+                    novoCookie += "/" + anteriores[i];
+                }
             }
             RemoveCookie();
             CreateCookie(novoCookie);

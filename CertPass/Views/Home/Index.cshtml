@@ -3,31 +3,14 @@
     ViewBag.Title = "Index";
 }
 
-@using (Html.BeginForm("ProximaPergunta","Home"))
-{
     <div class="jumbotron">
-        <h2>@Html.DisplayFor(model => model.DescPergunta)</h2>
-        @Html.HiddenFor(model => model.PerguntaId);
+        <h2>Bem-Vindo</h2>
         <br />
-        <fieldset>
-            @Html.RadioButtonFor(model => model.Alt1, Model.Alt1)
-            @Html.Label(Model.Alt1, Model.Alt1.ToString())
-            <br />
-            @Html.RadioButtonFor(model => model.Alt1, Model.Alt2)
-            @Html.Label("Pergunta", Model.Alt2.ToString())
-            <br />
-            @Html.RadioButtonFor(model => model.Alt1, Model.Alt3)
-            @Html.Label("Pergunta", Model.Alt3.ToString())
-            <br />
-            @Html.RadioButtonFor(model => model.Alt1, Model.Alt4)
-            @Html.Label("Pergunta", Model.Alt4.ToString())
-        </fieldset>
+        <h3>Clique nas categorias ao lado para começar os simulados.</h3>
+        <br />
+        OBS: Caso você clique em outra categoria ou volte para a Home
+        você perderá todo seu progresso do simulado.
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Responder" class="btn btn-default" />
-        </div>
-    </div>
-}
+
 
 

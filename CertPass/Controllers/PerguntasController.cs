@@ -12,6 +12,8 @@ namespace CertPass.Controllers
     {
         private PerguntasServico perguntasServico = new PerguntasServico();
         private CategoriasServico categoriasServico = new CategoriasServico();
+        CookieServico _cookieServico = new CookieServico();
+
         // GET: Perguntas
         public ActionResult Index()
         {
@@ -49,7 +51,9 @@ namespace CertPass.Controllers
         // GET: Perguntas/Edit/5
         public ActionResult Edit(long id)
         {
-            return View(perguntasServico.GetById(id));
+            Modelo.Perguntas p = perguntasServico.GetById(id);
+            PopularViewBag(p);
+            return View(p);
         }
 
         // POST: Perguntas/Edit/5
@@ -73,6 +77,35 @@ namespace CertPass.Controllers
         {
             perguntasServico.Delete(id);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult ProximaPergunta()
+        {
+            HttpCookie cookie = HttpContext.Request.Cookies["Cookie"];
+            Perguntas pergunta = perguntasServico.ProximaPerg(cookie.Value);
+            _cookieServico.DeletarAnterior(pergunta.PerguntaId, cookie.Value);
+            return View(pergunta);
+        }
+
+        [HttpPost]
+        public ActionResult ProximaPergunta(Perguntas p)
+        {
+            Perguntas pAtual = perguntasServico.GetById((long)p.PerguntaId);
+
+            if (p.Alt1 == pAtual.AltCorreta)
+            {
+                return View("~/Views/Perguntas/Certo.cshtml", pAtual);
+            }
+            return View("~/Views/Perguntas/Errado.cshtml", pAtual);
+        }
+
+        public ActionResult Perguntas(string categoriaSelecionada)
+        {
+            HttpCookie cookie = _cookieServico.CreateCookie(perguntasServico.GetRandom(Convert.ToInt16(categoriaSelecionada)));
+
+            Perguntas pergunta = perguntasServico.ProximaPerg(cookie.Value);
+            _cookieServico.DeletarAnterior(pergunta.PerguntaId, cookie.Value);
+            return View("~/Views/Perguntas/Perguntas.cshtml", pergunta);
         }
 
         private void PopularViewBag(Perguntas pergunta = null)

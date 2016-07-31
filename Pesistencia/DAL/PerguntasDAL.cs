@@ -50,18 +50,23 @@ namespace Persistencia.DAL
             db.SaveChanges();
         }
 
-        public string GetRandom()
+        public string GetRandom(int categoria)
         {
 
             //Criando um array de numeros randomicos
             Random r = new Random();
-            List<Perguntas> perguntas = List().ToList();
+            List<Perguntas> perguntas = db.Perguntas.Where(x=>x.CategoriaId == categoria).OrderBy(x => x.PerguntaId).ToList();
             string teste = "";
             
             HashSet<int> numbers = new HashSet<int>();
             while (numbers.Count < 3)
             {
-                numbers.Add(r.Next(1, perguntas.Count));
+                int novo = r.Next(1, (int)perguntas.Last().PerguntaId);
+
+                if (perguntas.Any(x=>x.PerguntaId == novo))
+                {
+                    numbers.Add(novo);
+                } 
             }
 
             int[] rnum =  numbers.ToArray();
@@ -70,21 +75,6 @@ namespace Persistencia.DAL
             {
                 teste += "/" + rnum[i];
             }
-
-
-            //bool haRepetido = true;
-            //do
-            //{
-            //    foreach (var item in anteriores)
-            //    {
-            //        if (atual == item)
-            //        {
-            //            atual = r.Next(0, perguntas.Count);
-            //            break;
-            //        }
-            //    }
-            //    haRepetido = false;
-            //} while (haRepetido == true || perguntas.Count != anteriores.Length);
             return teste;
         }
     }

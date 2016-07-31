@@ -36,9 +36,9 @@ namespace Servico
             perguntasDAL.Delete(id);
         }
 
-        public string GetRandom()
+        public string GetRandom(int categoria)
         {
-            return perguntasDAL.GetRandom();
+            return perguntasDAL.GetRandom(categoria);
         }
 
         public Perguntas ProximaPerg(string ant)

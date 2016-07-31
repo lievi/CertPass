@@ -173,9 +173,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Perguntas\Index.cshtml" />
     <Content Include="Web.config" />
-    <Content Include="Views\Home\Certo.cshtml" />
-    <Content Include="Views\Home\Errado.cshtml" />
-    <Content Include="Views\Home\ProximaPergunta.cshtml" />
+    <Content Include="Views\Perguntas\Certo.cshtml" />
+    <Content Include="Views\Perguntas\Errado.cshtml" />
+    <Content Include="Views\Perguntas\ProximaPergunta.cshtml" />
+    <Content Include="Views\Perguntas\Perguntas.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
