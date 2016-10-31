@@ -6,7 +6,7 @@
 <h2>Correto</h2>
 <br />
 
-<h3>@Html.DisplayFor(x =>x.DescResposta)</h3>
+<h3>@Html.DisplayFor(x => x.DescResposta)</h3>
 
-<button class="btn btn-default">@Html.ActionLink("Proxima Pergunta","ProximaPergunta")</button>
+@Html.ActionLink("Proxima Pergunta", "ProximaPergunta", new { @class = "btn btn-primary" })
 
